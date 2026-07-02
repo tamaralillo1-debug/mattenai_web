@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo | Mattenai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+{% include 'partials/navbar.html' %}
+
+<div class="container py-5">
+
+    <h1 class="mb-3">Catálogo Mattenai</h1>
+
+    <!-- MENSAJES DE ÉXITO / ERROR -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert 
+                {% if message.tags == 'error' %}
+                    alert-danger
+                {% elif message.tags == 'success' %}
+                    alert-success
+                {% elif message.tags == 'warning' %}
+                    alert-warning
+                {% else %}
+                    alert-info
+                {% endif %}
+                alert-dismissible fade show" role="alert">
+
+                {{ message }}
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <p class="text-muted">
+        Joyas y accesorios elegantes desde $4.990.
+    </p>
+
+    <div class="mb-4">
+        <a href="{% url 'catalogo' %}" class="btn btn-outline-dark btn-sm">
+            Todo
+        </a>
+
+        {% for categoria in categorias %}
+            <a href="?categoria={{ categoria.id }}" class="btn btn-outline-dark btn-sm">
+                {{ categoria.nombre }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+
+        {% for producto in productos %}
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+
+                    {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                    {% else %}
+                        <div class="bg-white d-flex align-items-center justify-content-center" style="height: 220px;">
+                            <div class="text-center text-muted">
+                                <h5>Mattenai</h5>
+                                <p>Imagen referencial pendiente</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body">
+                        <p class="text-muted small mb-1">
+                            {% if producto.categoria %}
+                                {{ producto.categoria.nombre }}
+                            {% else %}
+                                Joya Mattenai
+                            {% endif %}
+                        </p>
+
+                        <h5 class="card-title">
+                            {{ producto.nombre }}
+                        </h5>
+
+                        <p class="card-text">
+                            {{ producto.descripcion }}
+                        </p>
+
+                        <p class="fw-bold fs-5">
+                            ${{ producto.precio }}
+                        </p>
+
+                        {% if producto.stock > 0 %}
+                            <span class="badge bg-success">
+                                Disponible
+                            </span>
+
+                            <p class="text-muted small mt-2">
+                                Stock disponible: {{ producto.stock }}
+                            </p>
+                        {% else %}
+                            <span class="badge bg-danger">
+                                Agotado
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-footer bg-white border-0">
+                        <a href="{% url 'detalle_producto' producto.id %}" class="btn btn-outline-dark w-100 mb-2">
+                            Ver detalle
+                        </a>
+
+                        {% if producto.stock > 0 %}
+                            <a href="{% url 'agregar_carrito' producto.id %}" class="btn btn-dark w-100">
+                                Agregar al carrito
+                            </a>
+                        {% else %}
+                            <button class="btn btn-secondary w-100" disabled>
+                                Producto agotado
+                            </button>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+
+        {% empty %}
+
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No hay productos disponibles todavía.
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
