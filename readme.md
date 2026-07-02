@@ -51,46 +51,90 @@ La aplicación permite gestionar productos desde el panel administrador y simula
 
 ```powershell
 git clone https://github.com/tamaralillo1-debug/mattenai_web
-Ingresar a la carpeta del proyecto:
+```
+
+2. Ingresar a la carpeta del proyecto:
+
+```powershell
 cd mattenai_web
-Crear entorno virtual:
+```
+
+3. Crear entorno virtual:
+
+```powershell
 python -m venv venv
-Activar entorno virtual:
+```
+
+4. Activar entorno virtual:
+
+```powershell
 .\venv\Scripts\Activate.ps1
-Instalar dependencias:
+```
+
+5. Instalar dependencias:
+
+```powershell
 pip install -r requirements.txt
-Aplicar migraciones:
+```
+
+6. Aplicar migraciones:
+
+```powershell
 python manage.py migrate
-Ejecutar servidor local:
+```
+
+7. Ejecutar servidor local:
+
+```powershell
 python manage.py runserver
-Abrir en el navegador:
+```
+
+8. Abrir en el navegador:
+
+```text
 http://127.0.0.1:8000/
-Rutas principales
-Ruta	Descripción
-/	Página de inicio
-/catalogo/	Catálogo de productos
-/producto/<id>/	Detalle de producto
-/carrito/	Carrito de compras
-/pedidos/confirmar/	Confirmación de pedido
-/accounts/login/	Inicio de sesión
-/admin/	Panel de administración
-Credenciales de prueba
-Administrador
+```
+
+## Rutas principales
+
+| Ruta | Descripción |
+|---|---|
+| `/` | Página de inicio |
+| `/catalogo/` | Catálogo de productos |
+| `/producto/<id>/` | Detalle de producto |
+| `/carrito/` | Carrito de compras |
+| `/pedidos/confirmar/` | Confirmación de pedido |
+| `/accounts/login/` | Inicio de sesión |
+| `/admin/` | Panel de administración |
+
+## Credenciales de prueba
+
+### Administrador
+
+```text
 Usuario: Admin
 Contraseña: 123456
-Cliente
+```
+
+### Cliente
+
+```text
 Usuario: Cliente
 Contraseña: Joyas$Regalo2026
-Flujo principal probado
-Cliente ingresa al catálogo.
-Revisa el detalle del producto.
-Agrega producto al carrito.
-Actualiza cantidad o elimina producto.
-El sistema valida stock disponible.
-Cliente inicia sesión.
-Confirma compra.
-Se registra el pedido en la base de datos.
-Administrador revisa el pedido en Django Admin.
-Estado del proyecto
+```
+
+## Flujo principal probado
+
+1. Cliente ingresa al catálogo.
+2. Revisa el detalle del producto.
+3. Agrega producto al carrito.
+4. Actualiza cantidad o elimina producto.
+5. El sistema valida stock disponible.
+6. Cliente inicia sesión.
+7. Confirma compra.
+8. Se registra el pedido en la base de datos.
+9. Administrador revisa el pedido en Django Admin.
+
+## Estado del proyecto
 
 Proyecto funcional en entorno local para entrega final de ecommerce.

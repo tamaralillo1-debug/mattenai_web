@@ -3,6 +3,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from productos.models import Producto
 
 
+def formato_clp(valor):
+    try:
+        numero = int(valor)
+        return f"{numero:,}".replace(",", ".")
+    except (ValueError, TypeError):
+        return valor
+
+
 def obtener_carrito(request):
     return request.session.get('carrito', {})
 
@@ -53,11 +61,14 @@ def ver_carrito(request):
             'producto': producto,
             'cantidad': cantidad,
             'subtotal': subtotal,
+            'precio_formateado': formato_clp(producto.precio),
+            'subtotal_formateado': formato_clp(subtotal),
         })
 
     return render(request, 'carrito/carrito.html', {
         'items': items,
         'total': total,
+        'total_formateado': formato_clp(total),
     })
 
 
@@ -84,10 +95,7 @@ def procesar_carrito(request):
             cantidad = cantidad_actual
 
         if cantidad <= 0:
-            messages.error(
-                request,
-                f"La cantidad de {producto.nombre} debe ser mayor a 0."
-            )
+            messages.error(request, f"La cantidad de {producto.nombre} debe ser mayor a 0.")
             nuevo_carrito[producto_id] = cantidad_actual
             hay_error = True
             continue

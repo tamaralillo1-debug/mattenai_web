@@ -8,6 +8,14 @@ from productos.models import Producto
 from .models import Pedido, ItemPedido
 
 
+def formato_clp(valor):
+    try:
+        numero = int(valor)
+        return f"{numero:,}".replace(",", ".")
+    except (ValueError, TypeError):
+        return valor
+
+
 @login_required
 def confirmar_pedido(request):
     carrito = request.session.get('carrito', {})
@@ -53,6 +61,9 @@ def confirmar_pedido(request):
 
     pedido.total = total
     pedido.save()
+
+    # Total formateado para mostrar $4.990, $9.980, etc.
+    pedido.total_formateado = formato_clp(pedido.total)
 
     request.session['carrito'] = {}
     request.session.modified = True
